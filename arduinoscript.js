@@ -19,11 +19,9 @@ const elements = {
 async function pull() {
     const now = new Date(Date.now())
     elements.date.innerHTML = `${days[now.getDay()]}, ${now.getHours()}:${(now.getMinutes()).toString().padStart(2, '0')}`
-
     const items = (await pb.collection("measurements").getList(1, 1, {
         sort:'-created'
     })).items
-
     if(!items || items.length == 0) return
 
     const first = items[0]
@@ -34,6 +32,12 @@ async function pull() {
     elements.humidityField.innerHTML = `${first.humidity.toFixed(1)}%`
     elements.lightField.innerHTML = `${Math.max(Math.min((100 - first.light.toFixed(2)), 100), 0)}%`
     elements.lightStatus.innerHTML = cloudiness[Math.min(Math.floor((100 - first.light) / (100 / cloudiness.length)), cloudiness.length-1)]
+    elements.tempUnit.innerHTML = 1;
+    elements.tempField.innerHTML = 2;
+    elements.pressureField.innerHTML = 3;
+    elements.humidityField.innerHTML = 4;
+    elements.lightField.innerHTML = 5;
+    elements.lightStatus.innerHTML = 6;
 }
 
 $('#units').children().on("click", function() {
